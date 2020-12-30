@@ -35,7 +35,19 @@ for (i in 1:length(funds)) {
                  by.x = c("Year", "Month", "Net.Asset.Value"),
                  by.y = c("Year", "Month", "Min"),
                  sort = FALSE, all = FALSE)
-    #mrg <- group_by(mrg, Year, Month, Section.of.Month)
+    # Add a column that is just Year.Month.Section.of.Month pasted together. This is
+    # done to remove any duplicate occurrences of the minimum NAV in the same section
+    mrg <- mrg %>%
+        mutate(Separator = paste(mrg$Year, mrg$Month, mrg$Section.of.Month,
+                                 sep = ".")) %>%
+        subset(!duplicated(Separator))
+    # Change the level of Section.of.Month to accommodate the occurrence of dates in
+    # that section
+    # Create a variable that has the count of occurrences
+    cnt <- mrg %>% group_by(Section.of.Month) %>% summarise(n = n())
+    levels(mrg$Section.of.Month) <- paste(cnt$Section.of.Month,
+                                          paste0("(", cnt$n, ")"),
+                                          sep = " ")
 
     mrg_all <- merge(df, nav_min,
                      by.x = c("Year", "Month", "Net.Asset.Value"),
