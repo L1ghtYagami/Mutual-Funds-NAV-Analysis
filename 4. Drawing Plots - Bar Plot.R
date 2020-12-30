@@ -23,11 +23,11 @@ for (i in 1:length(funds)) {
     df <- subset(df_axis, Scheme.Name == funds[i])
     # Add a column stating in which 1/3rd or 1/6th part of the month the
     # Day.of.Month lies
-    # df <- mutate(df, Section.of.Month = cut(Day.of.Month, breaks = 3,
-    #                                         labels = c("1-11", "12-21", "22-31")))
-    df <- mutate(df, Section.of.Month = cut(Day.of.Month, breaks = 6,
-                                            labels = c("1-6", "7-11", "12-16",
-                                                       "17-21", "22-26", "27-31")))
+    df <- mutate(df, Section.of.Month = cut(Day.of.Month, breaks = 3,
+                                            labels = c("1-11", "12-21", "22-31")))
+    # df <- mutate(df, Section.of.Month = cut(Day.of.Month, breaks = 6,
+    #                                         labels = c("1-6", "7-11", "12-16",
+    #                                                    "17-21", "22-26", "27-31")))
 
     # Create a data frame with minimum NAV for each month for each year
     nav_min <- df %>% group_by(Year, Month) %>%
