@@ -59,6 +59,10 @@ for (i in 1:length(funds)) {
                    axis.ticks.x = element_blank()) +
         labs(x = "Section of Month", y = "Count", title = funds[i])
 
+    # Add facet
+    # g <- g + facet_grid(. ~ Year)
+    # g <- g + facet_grid(. ~ Month)
+
     print(g)
 
     dev.off()
