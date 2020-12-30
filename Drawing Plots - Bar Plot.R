@@ -21,9 +21,13 @@ funds <- unique(df_axis$Scheme.Name)
 for (i in 1:length(funds)) {
     # Create a subset of data frame with specific fund name
     df <- subset(df_axis, Scheme.Name == funds[i])
-    # Add a column stating in which 1/3rd part of the month the Day.of.Month lies
-    df <- mutate(df, Section.of.Month = cut(Day.of.Month, breaks = 3,
-                                            labels = c("1-11", "12-21", "22-31")))
+    # Add a column stating in which 1/3rd or 1/6th part of the month the
+    # Day.of.Month lies
+    # df <- mutate(df, Section.of.Month = cut(Day.of.Month, breaks = 3,
+    #                                         labels = c("1-11", "12-21", "22-31")))
+    df <- mutate(df, Section.of.Month = cut(Day.of.Month, breaks = 6,
+                                            labels = c("1-6", "7-11", "12-16",
+                                                       "17-21", "22-26", "27-31")))
 
     # Create a data frame with minimum NAV for each month for each year
     nav_min <- df %>% group_by(Year, Month) %>%
@@ -41,35 +45,19 @@ for (i in 1:length(funds)) {
         mutate(Separator = paste(mrg$Year, mrg$Month, mrg$Section.of.Month,
                                  sep = ".")) %>%
         subset(!duplicated(Separator))
-    # Change the level of Section.of.Month to accommodate the occurrence of dates in
-    # that section
-    # Create a variable that has the count of occurrences
-    cnt <- mrg %>% group_by(Section.of.Month) %>% summarise(n = n())
-    levels(mrg$Section.of.Month) <- paste(cnt$Section.of.Month,
-                                          paste0("(", cnt$n, ")"),
-                                          sep = " ")
 
-    mrg_all <- merge(df, nav_min,
-                     by.x = c("Year", "Month", "Net.Asset.Value"),
-                     by.y = c("Year", "Month", "Min"),
-                     sort = FALSE, all = TRUE)
-
-    # Plot the graph
+    # Draw Bar Plot
     png(filename = paste0("./Plots/", funds[i], ".png"),
-        width = 480*3, height = 480*3)
+        width = 480*3, height = 480*2)
 
-    g <- ggplot(mrg_all, aes(x = Day.of.Month, y = Net.Asset.Value)) +
-        geom_point(colour = "green", alpha =.5)
+    g <- ggplot(data = mrg,
+                mapping = aes(x = Section.of.Month, fill = Section.of.Month))
+    g <- g + geom_bar(aes(fill = Section.of.Month))
 
-    g <- g + facet_grid(Year ~ Month) +
-        geom_point(data = mrg,
-                   mapping = aes(x = Day.of.Month, y = Net.Asset.Value,
-                                 colour = Section.of.Month)) +
-        labs(x = "Day of the Month", y = "NAV", title = funds[i]) +
-        geom_text_repel(data = mrg,
-                        aes(x = Day.of.Month, y = Net.Asset.Value,
-                            label = Day.of.Month),
-                        colour = "blue", show.legend = FALSE)
+    # Remove the ticks on X-axis when using Month in Facet
+    g <- g + theme(axis.text.x = element_blank(),
+                   axis.ticks.x = element_blank()) +
+        labs(x = "Section of Month", y = "Count", title = funds[i])
 
     print(g)
 
