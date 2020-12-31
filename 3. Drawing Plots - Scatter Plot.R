@@ -11,9 +11,9 @@ df_axis <- read.csv("./Data/Filtered Data/Axis.csv")
 df_axis <- mutate(df_axis, Date = dmy(Date))
 
 df_axis <- mutate(df_axis,
-                     Day.of.Month = mday(Date),
-                     Month = month(Date, label = TRUE),
-                     Year = year(Date))
+                  Day.of.Month = mday(Date),
+                  Month = month(Date, label = TRUE),
+                  Year = year(Date))
 
 funds <- unique(df_axis$Scheme.Name)
 
