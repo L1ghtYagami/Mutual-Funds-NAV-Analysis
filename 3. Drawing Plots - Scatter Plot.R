@@ -60,7 +60,7 @@ for (i in 1:length(funds)) {
 
     # Plot the graph
     png(filename = paste0("./Plots/", funds[i], ".png"),
-        width = 480*3, height = 480*3)
+        width = 480*3, height = 480*2)
 
     g <- ggplot(mrg_all, aes(x = Day.of.Month, y = Net.Asset.Value)) +
         geom_point(colour = "green", alpha =.5)
