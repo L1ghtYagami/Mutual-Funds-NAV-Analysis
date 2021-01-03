@@ -9,7 +9,7 @@ you may have to edit some of the code (mostly comment and un-comment the respect
 lines) in order to generate the plot you want.
 
 ## Packages Used
-Running the scripts in the repositories require the following packages:
+Running the scripts in the repository requires the following packages:
 ```
 dplyr
 ggplot2
