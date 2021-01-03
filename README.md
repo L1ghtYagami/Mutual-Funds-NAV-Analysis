@@ -8,6 +8,15 @@ article I wrote
 you may have to edit some of the code (mostly comment and un-comment the respective
 lines) in order to generate the plot you want.
 
+## Packages Used
+Running the scripts in the repositories require the following packages:
+```
+dplyr
+ggplot2
+ggrepel
+lubridate
+```
+
 ## Brief information about what each script does
 
 1.  The first script **Data Gathering.R** downloads the data *as it is* from the
