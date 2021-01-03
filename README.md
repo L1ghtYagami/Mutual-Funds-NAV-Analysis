@@ -3,7 +3,8 @@
 ## Introduction
 
 This repository contains the scripts used to plot the graphs in the medium
-article I wrote <here>. The scripts are numbered in the order of execution, and
+article I wrote
+[here](https://aneesh-palsule.medium.com/choosing-sip-systematic-investment-plan-date-for-mutual-funds-9746afb0d2e6). The scripts are numbered in the order of execution, and
 you may have to edit some of the code (mostly comment and un-comment the respective
 lines) in order to generate the plot you want.
 
