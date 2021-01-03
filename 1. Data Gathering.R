@@ -26,7 +26,7 @@ extract_data <- function(date_from, date_to) {
 }
 
 date_from <- "01-Jan-2014"
-date_to <- "31-Dec-2020"
+date_to <- "31-Dec-2019"
 
 extract_data(date_from = date_from, date_to = date_to)
 
